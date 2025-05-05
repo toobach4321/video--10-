@@ -1,2 +1,46 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+// 1. Ternary for determining BMI category
+BMICategory _getBMICategory(double bmi) {
+  return (bmi < 18.5)
+      ? BMICategory.underweight
+      : (bmi < 24.9)
+          ? BMICategory.normal
+          : (bmi < 29.9)
+              ? BMICategory.overweight
+              : BMICategory.obese;
+}
+
+// 2. Ternary for labeling BMI category
+String _categoryLabel(BMICategory category) {
+  return category == BMICategory.underweight
+      ? 'Underweight'
+      : category == BMICategory.normal
+          ? 'Normal weight'
+          : category == BMICategory.overweight
+              ? 'Overweight'
+              : 'Obese';
+}
+
+// 3. Ternary for choosing color based on BMI category
+Color _categoryColor(BMICategory? category) {
+  return (category == BMICategory.normal)
+      ? Colors.green
+      : (category == BMICategory.underweight)
+          ? Colors.orange
+          : (category == BMICategory.overweight)
+              ? Colors.deepOrange
+              : (category == BMICategory.obese)
+                  ? Colors.red
+                  : Colors.black;
+}
+
+// 4. Ternary for conditional hint text (used in TextField decoration)
+String getHintText(String label) {
+  return label.contains("Weight") ? 'e.g. 60' : 'e.g. 170';
+}
+
+// 5. Ternary to validate and process BMI input (inline logic)
+void _calculateBMI(double? weight, double? heightCm) {
+  (weight == null || heightCm == null || weight <= 0 || heightCm <= 0)
+      ? setState(() => _bmiResult = 'Please enter valid values.')
+      : _computeAndSetBMI(weight, heightCm);
+}
